@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\OrganisationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,22 @@ Route::group([
 ], function () {
 
     Route::get("/", [ContactController::class, "index"]);
+    Route::get("/show/{id}", [ContactController::class, "show"]);
+    Route::post("/store", [ContactController::class, "store"]);
+    Route::put("/update/{id}", [ContactController::class, "update"]);
+    Route::delete("/destroy/{id}", [ContactController::class, "destroy"]);
+    Route::post("/isAlreadyExist", [ContactController::class, "isAlreadyExist"]);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'organisation'
+], function () {
+
+    Route::get("/", [OrganisationController::class, "index"]);
+    Route::get("/show/{id}", [OrganisationController::class, "show"]);
+    Route::post("/store", [OrganisationController::class, "store"]);
+    Route::put("/update/{id}", [OrganisationController::class, "update"]);
+    Route::delete("/destroy/{id}", [OrganisationController::class, "destroy"]);
+    Route::post("/isAlreadyExist", [OrganisationController::class, "isAlreadyExist"]);
 });
