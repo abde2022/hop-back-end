@@ -46,12 +46,13 @@ class OrganisationController extends Controller
             $totalOrganisation = $organisations->count();
 
             // pagination
-            if ($request->has('itemPerPage')) {
+            if ($request->has('itemPerPage') && $request->itemPerPage  != "") {
                 $itemPerPage = $validatedData['itemPerPage'];
             }
-            if ($request->has('currentPage')) {
+            if ($request->has('currentPage') && $request->itemPerPage  != "") {
                 $currentPage = $validatedData['currentPage'];
             }
+
 
             // empty-records
             if ($totalOrganisation == 0) {

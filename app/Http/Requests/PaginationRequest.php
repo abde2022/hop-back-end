@@ -26,8 +26,8 @@ class PaginationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "itemPerPage" => "sometimes|numeric",
-            "currentPage" => "sometimes|numeric",
+            "itemPerPage" => "sometimes|numeric|nullable",
+            "currentPage" => "sometimes|numeric|nullable",
         ];
     }
 
