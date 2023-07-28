@@ -21,7 +21,7 @@ class ContactController extends Controller
     /**
      * Display a listing of the contact.
      * 
-     * @param Request $request
+     * @param PaginationRequest $request
      * @return \Illuminate\Http\JsonResponse
      * 
      */
@@ -49,14 +49,15 @@ class ContactController extends Controller
                 $currentPage = $validatedData['currentPage'];
             }
 
+            // empty-records                   
+            if ($totalcontacts == 0) {
+                $returnMsg = "No Contacts Selected !";
+            }
+
             $pagedItems = $contacts->slice(($currentPage - 1) * $itemPerPage, $itemPerPage)->all();
             $paginatedItems = new LengthAwarePaginator($pagedItems, $totalcontacts, $itemPerPage, $currentPage);
             $data =  $paginatedItems->withPath(request()->url());
 
-            // empty-records                   
-            if ($data->count() == 0) {
-                $returnMsg = "No Contacts Selected !";
-            }
             return  $this->returnData("data", $data, 200, $returnMsg);
         } catch (ClientException $e) {
             return $this->returnError(500, "Something Went Wrong");
@@ -224,6 +225,74 @@ class ContactController extends Controller
             }
 
             return $this->returnData("data", $isExist,  200, "is Contact Already Exist With The Same FirstName and LastName");
+        } catch (ClientException $ce) {
+            return $this->returnSuccessMessage(500, "Something Went Wrong");
+        }
+    }
+    /**
+     * get contact organisation
+     * @param PaginationRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function contactWithOrganisation(PaginationRequest $request)
+    {
+        try {
+            // specified retun msg
+            $returnMsg = "Contact With Organisation Selected Successfully !";
+
+            // initile-pagination
+            $itemPerPage = 5;
+            $currentPage = 1;
+
+            // validation
+            $validatedData = $request->validated();
+
+            $contactsOrganisation = Contact::with('organisation')->get();
+            $totalcontacts = $contactsOrganisation->count();
+
+            // pagination
+            if ($request->has('itemPerPage')) {
+                $itemPerPage = $validatedData['itemPerPage'];
+            }
+            if ($request->has('currentPage')) {
+                $currentPage = $validatedData['currentPage'];
+            }
+
+            // empty-records                   
+            if ($totalcontacts == 0) {
+                $returnMsg = "No Relation Contact-Organisation Found !";
+            }
+
+            $pagedItems = $contactsOrganisation->slice(($currentPage - 1) * $itemPerPage, $itemPerPage)->all();
+            $paginatedItems = new LengthAwarePaginator($pagedItems, $totalcontacts, $itemPerPage, $currentPage);
+            $data =  $paginatedItems->withPath(request()->url());
+
+            return $this->returnData("data", $data,  200, $returnMsg);
+        } catch (ClientException $ce) {
+            return $this->returnSuccessMessage(500, "Something Went Wrong");
+        }
+    }
+    /**
+     * get contact organisation
+     * @param int $contactId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function contactIDWithOrganisation($contactId)
+    {
+        try {
+            // specified retun msg
+            $returnMsg = "Contact With $contactId Has Organisation  !";
+
+            $contactIdWithOrganisation  = Contact::with('organisation')
+                ->where('id', '=', $contactId)
+                ->get();
+
+            // empty-records
+            if ($contactIdWithOrganisation->count() == 0) {
+                $returnMsg = "Contact With $contactId Not Found !";
+                $contactIdWithOrganisation = [];
+            }
+            return  $this->returnData("data", $contactIdWithOrganisation, 200, $returnMsg);
         } catch (ClientException $ce) {
             return $this->returnSuccessMessage(500, "Something Went Wrong");
         }

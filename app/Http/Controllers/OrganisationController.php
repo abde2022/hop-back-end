@@ -53,14 +53,16 @@ class OrganisationController extends Controller
                 $currentPage = $validatedData['currentPage'];
             }
 
+            // empty-records
+            if ($totalOrganisation == 0) {
+                $returnMsg = "No Organisations Selected !";
+            }
+
             $pagedItems = $organisations->slice(($currentPage - 1) * $itemPerPage, $itemPerPage)->all();
             $paginatedItems = new LengthAwarePaginator($pagedItems, $totalOrganisation, $itemPerPage, $currentPage);
             $data =  $paginatedItems->withPath(request()->url());
 
-            // empty-records
-            if ($data->count() == 0) {
-                $returnMsg = "No Organisations Selected !";
-            }
+
             return  $this->returnData("data", $data, 200, $returnMsg);
         } catch (ClientException $e) {
             return $this->returnError(500, "Something Went Wrong");

@@ -41,3 +41,11 @@ Route::group([
     Route::delete("/destroy/{id}", [OrganisationController::class, "destroy"]);
     Route::post("/isAlreadyExist", [OrganisationController::class, "isAlreadyExist"]);
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'contact-organisation'
+], function () {
+    Route::get("/", [ContactController::class, "contactWithOrganisation"]);
+    Route::get("/{contactId}", [ContactController::class, "contactIDWithOrganisation"]);
+});
