@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('e_mail', 200);
             $table->string('nom', 200);
             $table->string('prenom', 100);
-            $table->string('telephone_fixe', 255);
+            $table->string('telephone_fixe', 255)->nullable();
             $table->string('service', 255)->nullable();
-            $table->string('fonction', 255);
+            $table->string('fonction', 255)->nullable();
             $table->softDeletes();
             $table->timestamps();
 

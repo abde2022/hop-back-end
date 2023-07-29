@@ -31,7 +31,7 @@ class NewOrganisationRequest extends FormRequest
             "adresse"         => "required|string",
             "code_postal"     => "required|numeric",
             "ville"           => "required|string",
-            "statut"          => "required|in:LEAD,CLIENT,PROSPECT",
+            "statut"          => "required|in:Lead,Client,Prospect",
             'created_at'      => "required|date|date_format:Y-m-d H:i:s",
             'updated_at'      => "required|date|date_format:Y-m-d H:i:s",
         ];

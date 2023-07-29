@@ -29,9 +29,6 @@ class EditContactRequest extends FormRequest
             "e_mail"          => "required||email",
             "nom"             => "required|string",
             "prenom"          => "required|string",
-            "telephone_fixe"  => ["sometimes", "regex:/^\+\d{11}$|^0\d{9}$/"],
-            "service"         => "sometimes|string|nullable",
-            "fonction"        => "sometimes|string",
             'updated_at'      => "required|date|date_format:Y-m-d H:i:s",
         ];
     }
@@ -47,6 +44,6 @@ class EditContactRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException($this->returnError(422, "The given data was invalid."));
+        throw new HttpResponseException($this->returnError(422, "The given data was invalid." . $validator->errors()));
     }
 }

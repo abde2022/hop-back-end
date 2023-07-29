@@ -114,9 +114,6 @@ class ContactController extends Controller
             $newContact->e_mail             = $validatedData['e_mail'];
             $newContact->nom                = $validatedData['nom'];
             $newContact->prenom             = $validatedData['prenom'];
-            $newContact->telephone_fixe     = $validatedData['telephone_fixe'];
-            $newContact->service            = $validatedData['service'];
-            $newContact->fonction           = $validatedData['fonction'];
             $newContact->created_at         = $validatedData['created_at'];
             $newContact->updated_at         = $validatedData['updated_at'];
 
@@ -155,9 +152,6 @@ class ContactController extends Controller
             $oldContact->e_mail             = $validatedData['e_mail'];
             $oldContact->nom                = $validatedData['nom'];
             $oldContact->prenom             = $validatedData['prenom'];
-            $oldContact->telephone_fixe     = $validatedData['telephone_fixe'];
-            $oldContact->service            = $validatedData['service'];
-            $oldContact->fonction           = $validatedData['fonction'];
             $oldContact->updated_at         = $validatedData['updated_at'];
 
             // check is edited

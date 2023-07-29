@@ -31,7 +31,7 @@ class EditOrganisationRequest extends FormRequest
             "adresse"         => "required|string",
             "code_postal"     => "required|numeric",
             "ville"           => "required|string",
-            "statut"          => "required|in:LEAD,CLIENT,PROSPECT",
+            "statut"          => "required|in:Lead,Client,Prospect",
             'updated_at'      => "required|date|date_format:Y-m-d H:i:s",
         ];
     }
@@ -47,6 +47,6 @@ class EditOrganisationRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException($this->returnError(422, "The given data was invalid."));
+        throw new HttpResponseException($this->returnError(422, "The given data was invalid." .  $validator->errors()));
     }
 }

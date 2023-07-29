@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('adresse');
             $table->string('code_postal', 255);
             $table->string('ville', 255);
-            $table->string('statut', 20)->comment('One of: client, lead, prospect');;
+            $table->string('statut', 20)->comment('One of: Client, Lead, Prospect');;
             $table->softDeletes('deleted_at');
             $table->timestamps();
         });
